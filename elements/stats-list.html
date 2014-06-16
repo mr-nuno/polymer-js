@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="stats-list">
+  <template>
+  	<link rel="stylesheet" type="text/css" href="../bower_components/semantic/build/packaged/css/semantic.css">
+  	<link rel="stylesheet" href="../css/app.css">
+  	<core-ajax id="fetcher" url="/api/stats" handleAs="json"></core-ajax>
+  	<table class="ui table">
+      <thead class="ui header">
+        <tr>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+      	<template repeat="{{item in items}}">
+					<tr>
+						<td class="ui small header">{{item.label}}</td>
+						<td>{{item.value}}</td>
+					</tr>
+        </template>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </tfoot>
+     </table>
+  </template>
+  <script>
+    Polymer('stats-list', {
+    	items: [],
+    	ready: function() {
+    		var ajax = this.$.fetcher;
+    		var _this = this;
+      	ajax.addEventListener('core-response', function(e) {
+        		_this.items = this.response;
+      	});
+
+      	ajax.go();
+    	}
+    });
+  </script>
+</polymer-element>

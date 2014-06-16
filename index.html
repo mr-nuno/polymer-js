@@ -18,18 +18,14 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
     <script src="bower_components/semantic/build/packaged/javascript/semantic.js"></script>
 
-    <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="elements/stats-list.html">
 
   </head>
 
   <body id="home">
 
-    <core-ajax url="http://www.easports.com/services/statscentral/getdata?platformTag=hockey-nhl-14-PS3&mode=solo&handle=mr_nuno" handleAs="json"></core-ajax>
-
     <header class="ui banner grid">
-
       <h1 class="ui header inverted">NHL STATS</h1>
-
     </header>
 
     <div class="ui">
@@ -41,62 +37,13 @@
         </nav>
     </div>
 
-    <div class="ui page">  
-      <table class="ui table">
-        <thead class="ui header">
-          <tr>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="ui small header">Points</td>
-            <td>1023</td>
-          </tr>
-          <tr>
-            <td class="ui small header">Wins</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td class="ui small header">Losses</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td class="ui small header">Overtime losses</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td class="ui small header">Total games</td>
-            <td>10</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-          </tr>
-        </tfoot>
-      </table>
+    <div class="ui page">
+      <stats-list></stats-list>
     </div>
 
     <footer class="banner">
 
     </footer>
-
-    <script>
-      // Wait for 'polymer-ready'. Ensures the element is upgraded.
-      window.addEventListener('polymer-ready', function(e) {
-        var ajax = document.querySelector('core-ajax');
-
-        // Respond to events it fires.
-        ajax.addEventListener('core-response', function(e) {
-          console.log(this.response);
-        });
-
-        ajax.go(); // Call its API methods.
-      });
-    </script>
 
   </body>
 
