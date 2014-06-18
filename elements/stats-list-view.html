@@ -1,0 +1,34 @@
+<link rel="import" href="../elements/action-bar.html">
+<link rel="import" href="../elements/stats-list.html">
+
+<polymer-element name="stats-list-view">
+  <template>
+    <link rel="stylesheet" type="text/css" href="../bower_components/semantic/build/packaged/css/semantic.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <core-ajax id="fetcher" url="/api/stats" handleAs="json"></core-ajax>
+    <action-bar id="actionBar"></action-bar>
+    <stats-list id="statsList"></stats-list>
+  </template>
+  <script>
+    Polymer('stats-list-view', {
+    	ready: function() {
+        var _this = this;
+        this.$.actionBar.addEventListener("fetch", function(e) {
+          _this.fetch(e.detail.game, e.detail.nickname);
+        });
+    	},
+      fetch: function(game, nickname) {
+        if (!game || !nickname) return;
+        var ajax = this.$.fetcher;
+        ajax.url = "/api/stats/" + game + "/" + nickname;
+        var _this = this;
+        ajax.addEventListener('core-response', function(e) {
+          _this.$.statsList.items = this.response;
+          console.log(this.response);
+        });
+
+        ajax.go();
+      }
+    });
+  </script>
+</polymer-element>

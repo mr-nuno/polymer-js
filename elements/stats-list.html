@@ -5,11 +5,10 @@
   <template>
   	<link rel="stylesheet" type="text/css" href="../bower_components/semantic/build/packaged/css/semantic.css">
   	<link rel="stylesheet" href="../css/app.css">
-  	<core-ajax id="fetcher" url="/api/stats" handleAs="json"></core-ajax>
-  	<table class="ui table">
+  	<table id="table" class="ui table">
       <thead class="ui header">
         <tr>
-          <th colspan="2">{{header}}</th>
+          <th colspan="2">&nbsp;</th>
         </tr>
       </thead>
       <tbody>
@@ -30,25 +29,10 @@
   </template>
   <script>
     Polymer('stats-list', {
-      header: "",
+      items: [],
     	ready: function() {
-        var _this = this;
-        document.querySelector('action-bar').addEventListener('fetch', function(e) {
-          _this.fetch(e.detail.game, e.detail.nickname);
-        });
-    	},
-      fetch: function(game, nickname) {
-        var ajax = this.$.fetcher;
-        ajax.url = "/api/stats/" + game + "/" + nickname;
-        var _this = this;
-        ajax.addEventListener('core-response', function(e) {
-          _this.header = nickname + " on " + game;
-          _this.items = this.response;
-          console.log(this.response);
-        });
-
-        ajax.go();
-      }
+        
+    	}
     });
   </script>
 </polymer-element>
