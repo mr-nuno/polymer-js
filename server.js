@@ -41,9 +41,9 @@ app.get('/', function(req,res) {
 	res.sendfile('index.html');
 });
 
-app.get('/api/stats', function(req,res) {
+app.get('/api/stats/:game/:nickname', function(req,res) {
 
-	var request = httpsync.get({ url : "http://www.easports.com/services/statscentral/getdata?platformTag=hockey-nhl-14-PS3&mode=versus&handle=mr_nuno"});
+	var request = httpsync.get({ url : "http://www.easports.com/services/statscentral/getdata?platformTag=hockey-" + req.params.game +"-PS3&mode=versus&handle=" + req.params.nickname});
 	var response = request.end();
 	res.type('application/json');
 	res.send(response.data.toString());

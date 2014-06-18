@@ -9,14 +9,13 @@
   	<table class="ui table">
       <thead class="ui header">
         <tr>
-          <th>&nbsp;</th>
-          <th>&nbsp;</th>
+          <th colspan="2">{{header}}</th>
         </tr>
       </thead>
       <tbody>
       	<template repeat="{{item in items}}">
 					<tr>
-						<td class="ui small header">{{item.label}}</td>
+            <td class="ui small header">{{item.label}}</td>
 						<td>{{item.value}}</td>
 					</tr>
         </template>
@@ -31,16 +30,25 @@
   </template>
   <script>
     Polymer('stats-list', {
-    	items: [],
+      header: "",
     	ready: function() {
-    		var ajax = this.$.fetcher;
-    		var _this = this;
-      	ajax.addEventListener('core-response', function(e) {
-        		_this.items = this.response;
-      	});
+        var _this = this;
+        document.querySelector('action-bar').addEventListener('fetch', function(e) {
+          _this.fetch(e.detail.game, e.detail.nickname);
+        });
+    	},
+      fetch: function(game, nickname) {
+        var ajax = this.$.fetcher;
+        ajax.url = "/api/stats/" + game + "/" + nickname;
+        var _this = this;
+        ajax.addEventListener('core-response', function(e) {
+          _this.header = nickname + " on " + game;
+          _this.items = this.response;
+          console.log(this.response);
+        });
 
-      	ajax.go();
-    	}
+        ajax.go();
+      }
     });
   </script>
 </polymer-element>

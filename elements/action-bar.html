@@ -1,0 +1,28 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="action-bar">
+  <template>
+
+    <link rel="stylesheet" type="text/css" href="../bower_components/semantic/build/packaged/css/semantic.css">
+    <link rel="stylesheet" href="../css/app.css">
+
+    <div class="ui">
+      <input id="nickname" type="text" placeholder="Type in your nickname">
+      <select id="game">
+        <option value="nhl-13">NHL 13</option>
+        <option value="nhl-14">NHl 14</option>
+      </select>
+      <button type="button" on-click="{{onClick}}">Fetch!</button>
+    </div>
+  </template>
+  <script>
+    Polymer('action-bar', {
+    	ready: function() {
+
+    	},
+      onClick: function() {
+        this.fire('fetch', { game: this.$.game.value, nickname: this.$.nickname.value });
+      }
+    });
+  </script>
+</polymer-element>
